@@ -8,6 +8,13 @@ const DUMMY_MEETUPS = [
       'https://image.kkday.com/v2/image/get/w_960%2Cc_fit%2Cq_55%2Ct_webp/s1.kkday.com/product_24157/20210302064554_MlaQe/jpg',
     address: 'this is address',
   },
+  {
+    id: 'm2',
+    title: 'mmm2222',
+    image:
+      'https://image.kkday.com/v2/image/get/w_960%2Cc_fit%2Cq_55%2Ct_webp/s1.kkday.com/product_24157/20210302064554_MlaQe/jpg',
+    address: 'this is address222',
+  },
 ];
 
 export default function Home() {
