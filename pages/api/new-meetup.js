@@ -7,7 +7,7 @@ function handler(req, res) {
   if (req.method !== 'POST') return;
   const data = req.body;
   // insert
-  const client = MongoClient.connect('mongodb+srv://xxxx');
+  const client = await MongoClient.connect('mongodb+srv://xxxx');
   const db = client.db();
   const meetupsCollection = db.collection('meetups');
   const result = await meetupsCollection.insertOne(data);
