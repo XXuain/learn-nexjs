@@ -2,7 +2,8 @@
 
 import React from 'react';
 
-function MeetupDetail() {
+function MeetupDetail(props) {
+  console.log('meetupData: ', props.meetupData);
   return <div>MeetupDetail</div>;
 }
 
@@ -16,7 +17,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const meetupId = context.params.meetupId;
-  console.log('meetupId', meetupId);
   return {
     props: {
       meetupData: {
