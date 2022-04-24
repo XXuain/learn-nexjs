@@ -1,3 +1,5 @@
+/** @format */
+
 import MeetupList from '../components/meetups/MeetupList';
 
 const DUMMY_MEETUPS = [
@@ -17,10 +19,19 @@ const DUMMY_MEETUPS = [
   },
 ];
 
-export default function Home() {
+function Home(props) {
   return (
     <div>
-      <MeetupList meetups={DUMMY_MEETUPS} />
+      <MeetupList meetups={props.meetups} />
     </div>
   );
 }
+
+export async function getStaticProps() {
+  return {
+    props: { meetups: DUMMY_MEETUPS },
+    revalidate: 1, // second
+  };
+}
+
+export default Home;
