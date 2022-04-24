@@ -1,5 +1,5 @@
 /** @format */
-
+import Head from 'next/head';
 import MeetupList from '../components/meetups/MeetupList';
 
 const DUMMY_MEETUPS = [
@@ -21,9 +21,16 @@ const DUMMY_MEETUPS = [
 
 function Home(props) {
   return (
-    <div>
+    <>
+      <Head>
+        <title>This is page title</title>
+        <meta
+          name="description"
+          content="Browser a huge list of highly active React neetups!"
+        />
+      </Head>
       <MeetupList meetups={props.meetups} />
-    </div>
+    </>
   );
 }
 
