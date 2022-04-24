@@ -26,7 +26,7 @@ function Home(props) {
         <title>This is page title</title>
         <meta
           name="description"
-          content="Browser a huge list of highly active React neetups!"
+          content={'Browser a huge list of highly active React neetups!'}
         />
       </Head>
       <MeetupList meetups={props.meetups} />

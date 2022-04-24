@@ -1,11 +1,18 @@
 /** @format */
 
+import { MongoClient } from 'mongodb';
 // api/new-meetup
 
 function handler(req, res) {
   if (req.method !== 'POST') return;
   const data = req.body;
-  console.log(data);
-  // set to db
+  // insert
+  const client = MongoClient.connect('mongodb+srv://xxxx');
+  const db = client.db();
+  const meetupsCollection = db.collection('meetups');
+  const result = await meetupsCollection.insertOne(data);
+  console.log(result);
+  client.close();
+
   res.status(201).json({ message: 'success' });
 }
