@@ -4,7 +4,7 @@ import fs from 'fs/promises'; // file system
 import path from 'path';
 
 function Home(props) {
-  console.log('props', props);
+  // console.log('props', props);
   return (
     <>
       <Head>
