@@ -8,7 +8,7 @@ const fetcher = (url) =>
 
 function CartsPage() {
   const { data: carts, error } = useSWR('/carts', fetcher);
-  console.log(carts, error);
+  console.log('useSWR res: ', carts, error);
 
   if (error) return <div>failed to load</div>;
   if (!carts) return <div>loading...</div>;
@@ -16,8 +16,8 @@ function CartsPage() {
     <>
       <h4>購物車列表</h4>
       <ul>
-        {carts.map((cart) => (
-          <>
+        {carts.map((cart, idx) => (
+          <React.Fragment key={idx}>
             <li>cart id: {cart.id}</li>
             <li key={cart.id}>
               cart products:
@@ -27,7 +27,7 @@ function CartsPage() {
                 ))}
               </ul>
             </li>
-          </>
+          </React.Fragment>
         ))}
       </ul>
     </>
