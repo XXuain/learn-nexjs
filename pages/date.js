@@ -8,9 +8,7 @@ axios.interceptors.request.use(
   (config) => {
     config = {
       ...config,
-      headers: {
-        Authorization: `Bearer ttttttttt`,
-      },
+      headers: { Authorization: `Bearer ttttttttt` },
     };
     return config;
   },
