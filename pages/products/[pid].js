@@ -1,10 +1,18 @@
 /** @format */
 
 import { Fragment } from 'react';
+import { useRouter } from 'next/router';
 import fs from 'fs/promises'; // file system
 import path from 'path';
 
 function Detail({ product }) {
+  const router = useRouter();
+
+  // 當 fallback: true 頁面生成時 router.isFallback 會一直為 true
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Fragment>
       <h1>{product.title}</h1>
@@ -27,6 +35,12 @@ export async function getStaticProps(context) {
   const data = await getData();
   const product = data.products.find((p) => p.id === pid);
 
+  // 當 fallback: true 時 動態資料來決定是否回傳 404
+  // 回傳 404 -> return { notFound: true };
+  if (!product) {
+    return { notFound: true };
+  }
+
   return { props: { product } };
 }
 
@@ -37,7 +51,13 @@ export async function getStaticPaths() {
 
   return {
     paths: pathsWithParams,
-    fallback: false, // false true blocking
+    /**
+     * fallback: false 不存在 回傳 404
+     * fallback: true 不存在 不回傳 404, 動態產生新頁面
+     * fallback: 'blocking' 不回傳 404, 沒有router.isFallback 狀態,
+     * 而是讓頁面卡在 getStaticProps 階段，體驗非常像 getServerSideProps
+     */
+    fallback: true,
   };
 }
 
