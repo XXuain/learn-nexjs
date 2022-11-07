@@ -1,10 +1,6 @@
 /** @format */
 import Head from 'next/head';
-import fs from 'fs/promises'; // file system
-import path from 'path';
-
-function Home(props) {
-  // console.log('props', props);
+function Home() {
   return (
     <>
       <Head>
@@ -16,16 +12,6 @@ function Home(props) {
       </Head>
     </>
   );
-}
-
-export async function getStaticProps() {
-  const filePath = path.join(process.cwd(), 'data', 'dummy_products.json');
-  const data = await fs.readFile(filePath);
-  const jsonData = JSON.parse(data);
-
-  return {
-    props: { products: jsonData.products },
-  };
 }
 
 export default Home;

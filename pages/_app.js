@@ -1,3 +1,5 @@
+/** @format */
+
 import '../styles/globals.css';
 import Layout from '../components/layout/Layout';
 export default function MyApp({ Component, pageProps }) {
