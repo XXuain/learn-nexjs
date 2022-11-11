@@ -2,18 +2,33 @@
 
 import { Fragment } from 'react';
 import { useRouter } from 'next/router';
-import { getFilteredEvents } from 'data/dummy-data';
+import { getFilteredEvents } from 'helpers/api-utils';
 import EventList from 'components/events/event-list';
 import ResultsTitle from 'components/events/results-title';
 import Button from 'components/ui/button';
 
-function FilteredEvents() {
-  const router = useRouter();
-  const filterData = router.query.slug;
-
-  if (!filterData) {
-    return <p className="center">Loading...</p>;
+function FilteredEvents({ hasError, filteredEvents, year, month }) {
+  if (hasError) {
+    return (
+      <Fragment>
+        <p>No events found for the chosen filter!</p>;
+        <Button link="/events">Show All Events</Button>
+      </Fragment>
+    );
   }
+
+  const date = new Date(year, month - 1);
+  return (
+    <Fragment>
+      <ResultsTitle date={date} />
+      <EventList items={filteredEvents} />
+    </Fragment>
+  );
+}
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const filterData = params.slug;
 
   const filteredYear = filterData[0];
   const filteredMonth = filterData[1];
@@ -29,30 +44,19 @@ function FilteredEvents() {
     numMonth < 1 ||
     numMonth > 12;
   if (error) {
-    return <p> Invalid filter!!</p>;
+    return {
+      // notFound: true,
+      hasError: true,
+    };
   }
 
-  // empty
-  const filteredEvents = getFilteredEvents({
+  const filteredEvents = await getFilteredEvents({
     year: numYear,
     month: numMonth,
   });
-  if (!filteredEvents || filteredEvents.length === 0) {
-    return (
-      <Fragment>
-        <p>No events found for the chosen filter!</p>;
-        <Button link="/events">Show All Events</Button>
-      </Fragment>
-    );
-  }
 
-  const date = new Date(numYear, numMonth - 1);
-  return (
-    <Fragment>
-      <ResultsTitle date={date} />
-      <EventList items={filteredEvents} />
-    </Fragment>
-  );
+  return {
+    props: { filteredEvents, year: numYear, month: numMonth },
+  };
 }
-
 export default FilteredEvents;

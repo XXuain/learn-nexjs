@@ -2,11 +2,10 @@
 
 import { Fragment } from 'react';
 import { useRouter } from 'next/router';
-import { getAllEvents } from '../../data/dummy-data';
+import { getAllEvents } from 'helpers/api-utils';
 import EventList from 'components/events/event-list';
 import EventsSearch from 'components/events/events-search';
 
-const featuredEvents = getAllEvents();
 function Events(props) {
   const router = useRouter();
   const onSearchHandle = (year, month) => {
@@ -22,6 +21,7 @@ function Events(props) {
 }
 
 export async function getStaticProps() {
+  const featuredEvents = await getAllEvents();
   return { props: { featuredEvents } };
 }
 export default Events;
